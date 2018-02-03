@@ -1,6 +1,7 @@
 package org.murat.pluralsight.controllers;
 
 import org.murat.pluralsight.models.TollUsage;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @RestController
 public class TollController {
     @RequestMapping("/tolldata")
+    @PreAuthorize("#oauth2.hasScope('toll_read') and hasAuthority('ROLE_OPERATOR')")
     public List<TollUsage> getTollData(){
         TollUsage instance1 = new TollUsage("100","station150","B65GT1W","2016-09-30T06:31:22");
         TollUsage instance2 = new TollUsage("101","station119","AHY673B","2016-09-30T06:32:50");
