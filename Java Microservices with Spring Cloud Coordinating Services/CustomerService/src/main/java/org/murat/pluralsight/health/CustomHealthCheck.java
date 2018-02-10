@@ -6,7 +6,7 @@ import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.stereotype.Component;
 
-@Component
+// @Component
 public class CustomHealthCheck implements HealthIndicator{
 
     private static final Log logger = LogFactory.getLog(CustomHealthCheck.class);
