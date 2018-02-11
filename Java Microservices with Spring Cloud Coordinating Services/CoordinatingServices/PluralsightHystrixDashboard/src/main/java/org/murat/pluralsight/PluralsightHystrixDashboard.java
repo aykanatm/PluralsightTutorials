@@ -6,8 +6,9 @@ import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboar
 
 @SpringBootApplication
 @EnableHystrixDashboard
-public class App {
+// @EnableTurbine
+public class PluralsightHystrixDashboard {
     public static void main(String[] args) {
-        SpringApplication.run(App.class, args);
+        SpringApplication.run(PluralsightHystrixDashboard.class, args);
     }
 }

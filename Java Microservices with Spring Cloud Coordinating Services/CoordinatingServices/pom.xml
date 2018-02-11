@@ -14,5 +14,6 @@
         <module>CustomerService</module>
         <module>Dashboard</module>
         <module>PluralsightHystrixDashboard</module>
+        <module>PluralsightHystrixTurbine</module>
     </modules>
 </project>
