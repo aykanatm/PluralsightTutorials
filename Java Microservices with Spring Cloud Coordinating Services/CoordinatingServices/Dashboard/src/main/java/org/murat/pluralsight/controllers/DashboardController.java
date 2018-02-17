@@ -6,6 +6,7 @@ import org.murat.pluralsight.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+@RibbonClient(name = "dashboard-local")
 @RestController
 public class DashboardController {
 
@@ -31,10 +33,11 @@ public class DashboardController {
         return restTemplate.getForObject("http://product-service/products/" + productId, Product.class);
     }
 
-    @HystrixCommand(fallbackMethod = "getCustomerBackup")
+    // @HystrixCommand(fallbackMethod = "getCustomerBackup")
     @RequestMapping(value = "dashboard/customers/{customerId}", method = RequestMethod.GET)
     public Customer getCustomer(@PathVariable String customerId){
-        return restTemplate.getForObject("http://customer-service/customers/" + customerId, Customer.class);
+        // return restTemplate.getForObject("http://customer-service/customers/" + customerId, Customer.class);
+        return restTemplate.getForObject("http://dashboard-local/customers/" + customerId, Customer.class);
     }
 
     public Product getProductBackup(@PathVariable String productId){
