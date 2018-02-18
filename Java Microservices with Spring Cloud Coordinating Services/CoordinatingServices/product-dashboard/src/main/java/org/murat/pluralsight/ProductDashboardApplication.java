@@ -8,8 +8,9 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @SpringBootApplication
 @EnableEurekaClient
 @EnableCircuitBreaker
-public class Dashboard {
-    public static void main(String[] args) {
-        SpringApplication.run(Dashboard.class, args);
-    }
+public class ProductDashboardApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ProductDashboardApplication.class, args);
+	}
 }

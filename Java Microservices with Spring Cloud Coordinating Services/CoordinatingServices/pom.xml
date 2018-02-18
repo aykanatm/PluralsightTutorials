@@ -12,8 +12,10 @@
         <module>PluralsightEurekaServer</module>
         <module>ProductService</module>
         <module>CustomerService</module>
-        <module>Dashboard</module>
         <module>PluralsightHystrixDashboard</module>
         <module>PluralsightHystrixTurbine</module>
+        <module>customer-dashboard</module>
+        <module>product-dashboard</module>
+        <module>pluralsight-zuul-apiproxy</module>
     </modules>
 </project>

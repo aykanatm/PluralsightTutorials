@@ -1,7 +1,6 @@
 package org.murat.pluralsight.controllers;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import org.murat.pluralsight.models.Customer;
 import org.murat.pluralsight.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -14,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-@RibbonClient(name = "dashboard")
+@RibbonClient(name = "product-service")
 @RestController
-public class DashboardController {
+public class ProductDashboardController {
 
     @LoadBalanced
     @Bean
@@ -28,17 +27,9 @@ public class DashboardController {
     private RestTemplate restTemplate;
 
     @HystrixCommand(fallbackMethod = "getProductBackup")
-    @RequestMapping(value = "dashboard/products/{productId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/dashboard/products/{productId}", method = RequestMethod.GET)
     public Product getProduct(@PathVariable String productId){
-        // return restTemplate.getForObject("http://product-service/products/" + productId, Product.class);
-        return restTemplate.getForObject("http://dashboard/products/" + productId, Product.class);
-    }
-
-    @HystrixCommand(fallbackMethod = "getCustomerBackup")
-    @RequestMapping(value = "dashboard/customers/{customerId}", method = RequestMethod.GET)
-    public Customer getCustomer(@PathVariable String customerId){
-        // return restTemplate.getForObject("http://customer-service/customers/" + customerId, Customer.class);
-        return restTemplate.getForObject("http://dashboard/customers/" + customerId, Customer.class);
+        return restTemplate.getForObject("http://product-service/products/" + productId, Product.class);
     }
 
     public Product getProductBackup(@PathVariable String productId){
@@ -49,16 +40,5 @@ public class DashboardController {
         p.setName("hy_name");
 
         return p;
-    }
-
-    public Customer getCustomerBackup(@PathVariable String customerId){
-        System.out.println("Fallback operation called!");
-
-        Customer c = new Customer();
-        c.setId(customerId);
-        c.setLastname("hy_lastname");
-        c.setName("hy_name");
-
-        return c;
     }
 }
