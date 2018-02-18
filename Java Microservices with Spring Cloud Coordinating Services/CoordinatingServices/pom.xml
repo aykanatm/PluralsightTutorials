@@ -17,5 +17,6 @@
         <module>customer-dashboard</module>
         <module>product-dashboard</module>
         <module>pluralsight-zuul-apiproxy</module>
+        <module>customer-intake</module>
     </modules>
 </project>
