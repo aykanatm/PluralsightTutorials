@@ -15,7 +15,7 @@ import java.util.Random;
 public class CustomerPublisher {
     Random r = new Random();
     @Bean
-    @InboundChannelAdapter(channel = "channelOne", poller = @Poller(fixedDelay = "2000"))
+    // @InboundChannelAdapter(channel = "channelOne", poller = @Poller(fixedDelay = "2000"))
     public MessageSource<Customer> sendCustomer(){
 //        return "{\n" +
 //                "    \"id\": \"1\",\n" +
