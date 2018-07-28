@@ -1,0 +1,90 @@
+<html>
+    <!-- Vue has to load first -->
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+    <!-- <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+    <link rel="stylesheet" href="css/growler.css"/>
+    <head>
+        <title>Growler</title>        
+    </head>
+    <body>        
+        <div id="growler">
+            <!-- Two way binding example -->        
+            <div>                
+                <input v-model="query" placeholder="Search..."/>
+                <br/>
+                <div>
+                    Searching for: {{ query }}
+                </div>
+            </div>
+            <div>                
+                <!-- Vue does not support mustaches for binding in textarea -->
+                <textarea v-model="emailMessage"></textarea>
+            </div>
+            <div>
+                <!-- Two way binding example -->
+                <input type="checkbox" v-model="isPowerSyntaxEnabled"/>
+            </div>
+            <div>                
+                <!-- As the user selects and de-selects checkboxes searchIndexes array is updated automatically reflecting the changes -->
+                <label>
+                    <input type="checkbox" value="beers" v-model="searchIndexes"/>
+                    Beers
+                </label>
+                <br/>
+                <label>
+                    <input type="checkbox" value="breweries" v-model="searchIndexes"/>
+                    Breweries
+                </label>
+                <br/>
+                <small>selected: {{ searchIndexes }}</small>
+            </div>
+            <div>
+                <!-- Works as same as the checkboxes but radio buttons output only one value -->
+                <label>
+                    <input type="radio" value="beers" v-model="searchIndex"/>
+                    Beers
+                </label>
+                <label>
+                    <input type="radio" value="breweries" v-model="searchIndex"/>
+                    Breweries
+                </label>
+                <br/>
+                <small>selected: {{ searchIndex }}</small>
+            </div>
+            <div>
+                <select v-model="selectedSearchIndex">
+                    <option value="beers">Beers</option>
+                    <option value="breweries">Breweries</option>
+                    <option value="distilleries">Distilleries</option>
+                    <option value="pubs">Pubs</option>
+                </select>
+                <br/>
+                <small>selected: {{ selectedSearchIndex }} </small>
+            </div>
+            <div>
+                <select multiple v-model="selectedSearchIndexes">
+                    <option value="beers">Beers</option>
+                    <option value="breweries">Breweries</option>
+                    <option value="distilleries">Distilleries</option>
+                    <option value="pubs">Pubs</option>
+                </select>
+                <br/>
+                <small>selected: {{ selectedSearchIndexes }} </small>
+            </div>
+            <div>
+                <!-- Modifiers -->
+                <!-- The content will be automatically trimmed -->
+                <input v-model.trim="query" placeholder="Search..."/>
+                <!-- The content will be automatically cast into a floating point number -->
+                <input v-model.number="result" placeholder="2+3="/>
+                <!-- When lazy modifier is applied, the bound variable onlu changes when the field looses focus (as in default WPF MVVM) -->
+                <input v-model.lazy="query" placeholder="Search..."/>
+                <!-- Chaining modifiers -->
+                <!-- Modifiers are applied from left to right -->
+                <input v-model.lazy.trim="query" placeholder="Search..."/>
+            </div>            
+        </div>        
+        <!-- Other scripts will be loaded at the end -->
+        <script type="text/javascript" src="growler.js"></script>       
+    </body>    
+</html>
