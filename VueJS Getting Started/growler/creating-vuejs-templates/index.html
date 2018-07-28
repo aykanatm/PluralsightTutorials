@@ -1,0 +1,49 @@
+<html>
+    <!-- Vue has to load first -->
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+    <!-- <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+    <link rel="stylesheet" href="css/growler.css"/>
+    <head>
+        <title>Growler</title>        
+    </head>
+    <body>        
+        <div id="growler">
+            <!-- These values will change as the variable name changes -->
+            <h2>{{ appName }}</h2>
+            <h2 v-text="appName"></h2>
+            <!-- This value will stay as is even if the variable changes -->
+            <h2 v-once>{{ appName }}</h2>
+            <div>
+                <span>{{ htmlData }}</span>
+            </div>
+            <div>
+                <!-- We don't need to put moustaches -->
+                <!-- Do not bind to user generated HTML! -->
+                <span v-html="htmlData"></span>                
+            </div>
+            <div>
+                <img alt="Growler" v-bind:src="appLogo" style="height: 36px;">
+            </div>            
+            <div>
+                <!-- We cannot use dash(-) so we use camel casing instead of dashes in properties -->
+                <h2 v-text="appName" v-bind:style="{color:color, fontFamily:fontFamily}"></h2>
+                <!-- We can assign style to a JS object as well -->
+                <h2 v-text="appName" v-bind:style="appStyle"></h2>
+                <!-- Also we can assign style to an array of JS objects -->
+                <h2 v-text="appName" v-bind:style="[accentColor, headers]"></h2>
+                <!-- Also we can assign to CSS classes -->
+                <h2 v-text="appName" v-bind:class="[cssAccentColor, cssHeaders]"></h2>
+                <!-- We can use an array of classes as well -->                
+                <h2 v-text="appName" v-bind:class="headerClasses"></h2>
+                <!-- We can set classes conditionally; when isOnline is true it will turn to orange -->
+                <h2 v-text="appName" v-bind:class="{'headers': true, 'accent-color': isOnline}"></h2>
+            </div>
+            <div>
+                <!-- Javascript expression -->
+                <h2 v-text="appName" v-bind:style="{color: isOnline? '#FF6A00':'#000'}"></h2>
+            </div>
+        </div>        
+        <!-- Other scripts will be loaded at the end -->
+        <script type="text/javascript" src="growler.js"></script>             
+    </body>    
+</html>
