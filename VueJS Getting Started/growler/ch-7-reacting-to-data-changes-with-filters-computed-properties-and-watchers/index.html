@@ -1,0 +1,40 @@
+<html>
+    <!-- Vue has to load first -->
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+    <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="css/growler.css"/>
+    <head>
+        <title>Growler</title>        
+    </head>
+    <body>        
+        <div id="growler">
+            <div>
+                <table>
+                    <tr>
+                        <th>Beer</th>
+                        <th>Price</th>
+                        <th>IBU</th>
+                        <th></th>
+                    </tr>
+                    <tr v-for="beer in beers">
+                        <td>{{ beer.name }}</td>
+                        <td>{{ beer.price }}</td>
+                        <td>{{ beer.ibu | convertIBU('--') | removePeriods | toUpperCase }}</td>
+                        <td><button v-on:click="buy(beer)">Buy</button></td>
+                    </tr>
+                    <tr>
+                        <td>Subtotal</td>
+                        <td>{{ shoppingCart.subTotal }}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                Online? {{ isOnline }}
+            </div>      
+        </div>        
+        <!-- Other scripts will be loaded at the end -->
+        <script type="text/javascript" src="growler.js"></script>       
+    </body>    
+</html>
