@@ -1,0 +1,103 @@
+<html>
+    <!-- Vue has to load first -->
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+    <!-- <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+    <link rel="stylesheet" href="css/growler.css"/>
+    <head>
+        <title>Growler</title>        
+    </head>
+    <body>        
+        <div id="growler">
+            <!-- Cloak makes sure that this element is shown after everything is loaded. It needs configuration in the CSS -->
+            <div v-cloak>                
+                <h2 v-cloak>{{ appName }}</h2>
+                <!-- Shows or hides elements by the result of the expression or variable -->
+                <h2 v-show="isShowing">{{ appName }}</h2>
+                <!-- If directives are more costly -->
+                <p v-if="beers.length === 0">There are no beer left!</p>
+                <p v-else-if="beers.length === 1">There is only 1 beer left.</p>
+                <p v-else>There are {{ beers.length }} beers left.</p>
+                <div>
+                    <p>List of beers:</p>
+                    <ul>
+                        <li v-for="beer in beers">
+                            {{beer}}
+                        </li>
+                    </ul>
+                </div>                
+                <div>
+                    <p>Current user:</p>
+                    <ul>
+                        <li v-for="v in currentUser">
+                            {{ v }}
+                        </li>
+                    </ul>
+                    <ul>
+                        <li v-for="v, k in currentUser">
+                            {{ k }} - {{ v }}
+                        </li>
+                    </ul>
+                    <ul>
+                        <li v-for="(v, k, i) in currentUser">
+                            {{ i }} : {{ k }} - {{ v }}
+                        </li>
+                    </ul>
+                </div>                
+                <div>
+                    <p>Pages</p>
+                    <ul>
+                        <li v-for="(page, i) in pages">
+                            <a v-bind:href="page.url">
+                                {{ page.number }}
+                            </a>
+                            <small>({{ i }})</small>       
+                        </li>
+                    </ul>
+                </div>                
+                <div>
+                    <label>
+                        <strong>Max Alcohol by Volume (a.b.v)</strong>
+                    </label>
+                    <br/>
+                    <input type="range" v-model="maxAbv" min="0" max="10"/>
+                    <small>{{ maxAbv }}</small>
+                </div>
+                <div>
+                    <li>
+                        <strong>Beers</strong>
+                    </li>
+                    <!-- First for directive will run, after that if directive will run -->
+                    <li v-for="beer in beers" v-if="beer.abv < maxAbv">
+                        {{ beer }}
+                    </li>
+                </div>
+                <div>
+                    <p>Sorted beers: </p>
+                    <!-- Sorted string array -->
+                    <li v-for="beerName in beerNames.sort()">
+                        {{ beerName }}
+                    </li>
+                </div>
+                <div>
+                    <p>Sorted abv values: </p>
+                    <!-- Sorted float array -->
+                    <!-- A negative value means tha the first parameter should be in the array before the second parameter -->
+                    <!-- A value of zero means that there should be no change in the order -->
+                    <!-- A positive value means the first parameter should be in the array after the second parameter -->
+                    <li v-for="abvValue in abvValues.sort(function(v1,v2){ return v1 - v2})">
+                        {{ abvValue }}
+                    </li>
+                </div>
+                <div>
+                    <p>Reverse sorted beers: </p>
+                    <!-- Sorted string array -->
+                    <li v-for="beerName in beerNames.sort().reverse()">
+                        {{ beerName }}
+                    </li>
+                </div>
+            </div>       
+        </div>        
+        <!-- Other scripts will be loaded at the end -->
+        <script type="text/javascript" src="growler.js"></script>       
+    </body>    
+</html>
