@@ -1,0 +1,132 @@
+<html>
+    <!-- Vue has to load first -->
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+    <!-- <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+    <link rel="stylesheet" href="css/growler.css"/>
+    <head>
+        <title>Growler</title>        
+    </head>
+    <body>        
+        <div id="growler" v-on:keydown.f2="openInfo">            
+            <div>
+                <form>
+                    <input v-model="query" type="search" placeholder="Search..."/>
+                    <button type="button" v-on:click="executeSearch">Search</button>
+                </form>
+                <form>
+                    <input v-model="query" type="search" placeholder="Search..."/>
+                    <button type="button" v-on:click="executeSearchTwo('token', $event)">Search</button>
+                </form>
+                <form>
+                    <input v-model="query" type="search" placeholder="Search..."/>
+                    <!-- The event sequence would be grandParentClick, parentClick, executeSearch -->
+                    <div v-on:click.capture="grandParentClick">
+                        <div v-on:click.capture="parentClick">
+                            <button type="button" v-on:click.capture="executeSearch">Search</button>
+                        </div>
+                    </div>                    
+                </form>
+                <form>
+                    <input v-model="query" type="search" placeholder="Search..."/>
+                    <!-- The event sequence would be grandParentClick, executeSearch, parentClick -->
+                    <div v-on:click.capture="grandParentClick">
+                        <div v-on:click="parentClick">
+                            <button type="button" v-on:click="executeSearch">Search</button>
+                        </div>
+                    </div>            
+                </form>
+                <form action="#" method="GET">                    
+                    <input v-model="query" id="query" name="query"/>
+                    <!-- Prevent modifier prevents the default event being fired (i.e. submit event). We need to fire the event on JS side. -->
+                    <button type="submit" v-on:click.prevent="executeSearchThree">Search</button>
+                </form>
+                <form>
+                    <input v-model="query" type="search" placeholder="Search..."/>
+                    <!-- Stop modifier stops event propogation. Here only executeSearch will run. -->
+                    <div v-on:click="grandParentClick">
+                        <div v-on:click="parentClick">
+                            <button type="button" v-on:click.stop="executeSearch">Search</button>
+                        </div>
+                    </div>                    
+                </form>
+                <form>
+                    <input v-model="query" type="search" placeholder="Search..."/>
+                    <!-- Stop modifier stops event propogation. Here executeSearch and parentClick will run but grandParentClick won't run. -->
+                    <div v-on:click="grandParentClick">
+                        <div v-on:click.stop="parentClick">
+                            <button type="button" v-on:click="executeSearch">Search</button>
+                        </div>
+                    </div>                    
+                </form>
+                <form>
+                    <input v-model="query" type="search" placeholder="Search..."/>
+                    <!-- Self modifier makes sure that an event is fired if the element is the originator. Here only executeSearch will run -->
+                    <div v-on:click="grandParentClick">
+                        <div v-on:click="parentClick">
+                            <button type="button" v-on:click.self="executeSearch">Search</button>
+                        </div>
+                    </div>                    
+                </form>
+                <form>
+                    <input v-model="query" type="search" placeholder="Search..."/>
+                    <!-- If we click on the search button executeSearch and grandParentClick will run. -->
+                    <!-- However if we click on the parent div, only parentClick will run -->
+                    <div v-on:click="grandParentClick">
+                        <div v-on:click.self="parentClick">
+                            <button type="button" v-on:click="executeSearch">Search</button>
+                        </div>
+                    </div>                                       
+                </form>   
+                <form action="#" method="POST">                    
+                    <input v-model="query" v-bind:disabled="isRunning" type="search" placeholder="Search..."/>
+                    <!-- Once modifier prevents the event being fired more than once -->
+                    <button type="button" v-bind:disabled="isRunning" v-on:click.once="executeSearchFour">Search</button>
+                </form>
+                <form>
+                    <input v-model="query" type="search" placeholder="Search..."/>
+                    <!-- We can chain these modifiers as well -->
+                    <div v-on:click="grandParentClick">
+                        <div v-on:click.stop.self="parentClick">
+                            <button type="button" v-on:click="executeSearch">Search</button>
+                        </div>
+                    </div>                    
+                </form>
+                <form v-on:submit.prevent action="#" method="GET">                    
+                    <!-- If enter key is pressed, first evaluateKey method will run. Then the executeSearch will run -->
+                    <input v-model="query" type="search" placeholder="Search..." v-on:keyup="evaluateKey" v-on:keyup.enter="executeSearch"/>                    
+                    <button type="button" v-on:click.once="executeSearch">Search</button>
+                </form>
+                <div v-on:mousedown.left="onBlockClick" style="height: 100px; width: 100px; color: white; background-color: teal;">
+                    Click this area with the left mouse button
+                </div>
+                <div v-on:mousedown.middle="onBlockClick" style="height: 100px; width: 100px; color: white; background-color: teal;">
+                    Click this area with the middle mouse button
+                </div>
+                <div v-on:mousedown.right="onBlockClick" style="height: 100px; width: 100px; color: white; background-color: teal;">
+                    Click this area with the right mouse button
+                </div>
+                <!-- When right click is pressed, the browser's context menu won't appear -->
+                <div v-on:contextmenu.prevent="openContextMenu" style="height: 100px; width: 100px; color: white; background-color: teal;">
+                    Click this area with the right mouse button for custom context menu
+                </div>
+                <ul id="MyContextMenu" v-if="showContextMenu" v-on:blur="closeContextMenu" v-bind:style="{top:top, left:left}">
+                    <li>
+                        <a href="#" v-on:click="onCopyClick">
+                            Copy
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" v-on:click="onPasteClick">
+                            Copy
+                        </a>
+                    </li>
+                </ul>
+                <form>
+                    <input type="search" v-model="query" v-on:keypress.enter.prevent="executeSearch" v-on:keyup.ctrl.enter="executeSearchInNewWindow" placeholder="Search..."/>
+                </form>
+            </div>                     
+        </div>        
+        <!-- Other scripts will be loaded at the end -->
+        <script type="text/javascript" src="growler.js"></script>       
+    </body>    
+</html>
